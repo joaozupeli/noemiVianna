@@ -1,0 +1,529 @@
+@import './variables.css';
+@import 'lenis/dist/lenis.css';
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Sem `scroll-behavior: smooth` aqui: a rolagem suave é feita pelo Lenis
+   (src/lib/smoothScroll.js) e as duas coisas juntas brigam pelo controle do
+   scroll, deixando a navegação por âncora travada. */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--text);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+iframe {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-tight);
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+.section {
+  position: relative;
+  padding-block: var(--space-section);
+  border-top: var(--hairline) solid var(--rule);
+}
+
+.section--ink {
+  background: var(--ink);
+  color: var(--on-ink);
+  border-top-color: transparent;
+}
+
+.section--tint {
+  background: var(--paper-2);
+}
+
+.section--flush {
+  border-top: 0;
+}
+
+/* Fios verticais do grid, como a marcação de uma página impressa.
+   Decorativo: fica atrás do conteúdo e nunca captura clique. */
+.rules {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--rule-local, var(--rule)) 0 var(--hairline),
+    transparent var(--hairline) 100%
+  );
+  background-size: 50% 100%;
+}
+
+.section--ink .rules {
+  --rule-local: var(--rule-on-ink);
+}
+
+@media (min-width: 768px) {
+  .rules {
+    background-size: 25% 100%;
+  }
+}
+
+/* ============================================================
+   TIPOGRAFIA EDITORIAL
+   ============================================================ */
+
+.label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--track-mono);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.section--ink .label {
+  color: var(--accent-2);
+}
+
+.label--mute {
+  color: var(--text-mute);
+}
+
+.section--ink .label--mute {
+  color: var(--on-ink-mute);
+}
+
+.index {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--text-mute);
+  font-variant-numeric: tabular-nums;
+}
+
+.section--ink .index {
+  color: var(--on-ink-mute);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: var(--lh-display);
+  letter-spacing: var(--track-display);
+}
+
+.display em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.lead {
+  font-size: var(--fs-md);
+  line-height: var(--lh-snug);
+  color: var(--text-mute);
+  max-width: 46ch;
+}
+
+.section--ink .lead {
+  color: var(--on-ink-mute);
+}
+
+.prose {
+  color: var(--text-mute);
+  max-width: 62ch;
+}
+
+.prose p + p {
+  margin-top: var(--space-4);
+}
+
+.prose strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.drop-cap::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-size: 4.2em;
+  line-height: 0.78;
+  font-weight: 500;
+  color: var(--ink);
+  padding-right: 0.08em;
+  margin-top: 0.06em;
+}
+
+/* Cabeçalho de seção: numeração e etiqueta na margem, título grande ao lado.
+   É a estrutura de abertura de capítulo de revista. */
+.chapter {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.chapter__meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+}
+
+.chapter__title {
+  font-size: var(--fs-xl);
+  max-width: 22ch;
+}
+
+.chapter__lead {
+  font-size: var(--fs-md);
+  line-height: var(--lh-snug);
+  color: var(--text-mute);
+  max-width: 44ch;
+}
+
+.section--ink .chapter__lead {
+  color: var(--on-ink-mute);
+}
+
+@media (min-width: 1024px) {
+  .chapter {
+    grid-template-columns: 10rem 1fr;
+    gap: var(--space-5) var(--space-7);
+    align-items: start;
+  }
+
+  .chapter__meta {
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-top: 0.7rem;
+    border-top: var(--hairline) solid var(--rule-strong);
+  }
+
+  .section--ink .chapter__meta {
+    border-top-color: var(--rule-on-ink-strong);
+  }
+
+  .chapter__lead {
+    grid-column: 2;
+  }
+}
+
+/* ============================================================
+   PRIMITIVAS
+   ============================================================ */
+
+/* Envelope para revelação em máscara: o filho sobe de dentro dele. */
+.mask {
+  overflow: hidden;
+}
+
+.mask > * {
+  display: block;
+}
+
+.hairline {
+  height: var(--hairline);
+  background: var(--rule);
+  border: 0;
+  width: 100%;
+}
+
+.section--ink .hairline {
+  background: var(--rule-on-ink);
+}
+
+.stamp {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: var(--hairline) solid var(--accent);
+  padding: 0.4rem 0.7rem;
+}
+
+.section--ink .stamp {
+  color: var(--accent-2);
+  border-color: var(--accent-2);
+}
+
+/* ============================================================
+   BOTÕES
+   ============================================================ */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: 1rem 1.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: var(--hairline) solid transparent;
+  overflow: hidden;
+  transition: color var(--t-mid) var(--ease-out),
+    border-color var(--t-mid) var(--ease-out);
+}
+
+/* Preenchimento que sobe no hover, em vez de trocar a cor de fundo seco. */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  transition: transform var(--t-mid) var(--ease-in-out);
+}
+
+.btn:hover::after,
+.btn:focus-visible::after {
+  transform: scaleY(1);
+}
+
+.btn > * {
+  position: relative;
+  z-index: 1;
+}
+
+.btn__text {
+  position: relative;
+  z-index: 1;
+}
+
+.btn--ink {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.btn--ink::after {
+  background: var(--accent);
+}
+
+.btn--ink:hover {
+  border-color: var(--accent);
+}
+
+.btn--outline {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.btn--outline::after {
+  background: var(--ink);
+}
+
+.btn--outline:hover,
+.btn--outline:focus-visible {
+  color: var(--paper);
+}
+
+.btn--on-ink {
+  color: var(--on-ink);
+  border-color: var(--rule-on-ink-strong);
+}
+
+.btn--on-ink::after {
+  background: var(--paper);
+}
+
+.btn--on-ink:hover,
+.btn--on-ink:focus-visible {
+  color: var(--ink);
+  border-color: var(--paper);
+}
+
+.btn--wa {
+  background: var(--wa);
+  color: #fff;
+  border-color: var(--wa);
+}
+
+.btn--wa::after {
+  background: var(--ink);
+}
+
+.btn--full {
+  width: 100%;
+}
+
+/* Link editorial: sublinhado que se desenha da esquerda. */
+.btn-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-bottom: 0.35rem;
+}
+
+.btn-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--hairline);
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--t-mid) var(--ease-in-out);
+}
+
+.btn-link:hover::after,
+.btn-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.section--ink .btn-link {
+  color: var(--accent-2);
+}
+
+/* ============================================================
+   FORMULÁRIO
+   ============================================================ */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.field__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--track-mono);
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+.field input,
+.field select,
+.field textarea {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  border-bottom: var(--hairline) solid var(--rule-strong);
+  padding: 0.65rem 0;
+  transition: border-color var(--t-fast), background-color var(--t-fast);
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 5.5rem;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-bottom-color: var(--accent);
+}
+
+.field input[aria-invalid='true'],
+.field select[aria-invalid='true'],
+.field textarea[aria-invalid='true'] {
+  border-bottom-color: var(--accent);
+}
+
+.field__error {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}

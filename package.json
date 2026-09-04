@@ -1,0 +1,23 @@
+{
+  "name": "noemi-vianna",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5180 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --port 5181 --strictPort",
+    "check": "node verify.mjs http://localhost:5181/"
+  },
+  "dependencies": {
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.26",
+    "vue": "^3.5.40",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.8",
+    "playwright": "^1.62.1",
+    "vite": "^8.2.0"
+  }
+}
