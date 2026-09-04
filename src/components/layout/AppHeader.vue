@@ -151,7 +151,7 @@ onUnmounted(() => {
   <header class="head" :class="{ 'is-scrolled': isScrolled, 'is-open': isOpen }">
     <div class="container head__bar">
       <a href="#topo" class="brand" @click="onNavClick">
-        <span class="brand__mark" aria-hidden="true">M<span>&amp;</span>A</span>
+        <span class="brand__mark" aria-hidden="true">N<span>V</span></span>
         <span class="brand__name">
           <strong>{{ firm.name }}</strong>
           <small>{{ firm.legal.oab }}</small>
@@ -214,7 +214,7 @@ onUnmounted(() => {
         <a :href="`tel:${firm.contact.phone.replace(/\D/g, '')}`" class="menu__phone">
           {{ firm.contact.phone }}
         </a>
-        <a :href="`mailto:${firm.contact.email}`" class="menu__mail">
+        <a v-if="firm.contact.email" :href="`mailto:${firm.contact.email}`" class="menu__mail">
           {{ firm.contact.email }}
         </a>
       </div>

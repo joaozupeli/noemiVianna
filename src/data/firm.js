@@ -51,8 +51,9 @@ export const firm = {
 
   stats: [
     { id: 'years', label: 'Anos de experiência', value: 39, suffix: '+' },
-    { id: 'focus', label: 'Foco em Previdenciário e Trabalhista', value: 100, suffix: '%' },
-    { id: 'region', label: 'Atuação na região de Colombo e RMC', value: 1, suffix: '', hideValue: true },
+    { id: 'areas', label: 'Áreas de atuação', value: 4, suffix: '' },
+    { id: 'dedication', label: 'Dedicação ao cliente', value: 100, suffix: '%' },
+    { id: 'region', label: 'Foco em Colombo e região', value: 1, suffix: '' },
   ],
 
   about: {

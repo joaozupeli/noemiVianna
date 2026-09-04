@@ -113,7 +113,7 @@ onUnmounted(() => ctx?.revert())
           <img
             class="hero__img"
             src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1400&q=80"
-            alt="Corredor do escritório Mendes &amp; Associados"
+            alt="Imagem representativa do escritório"
             width="1400"
             height="1750"
             fetchpriority="high"

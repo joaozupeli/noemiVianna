@@ -46,16 +46,16 @@ onUnmounted(() => ctx?.revert())
 
     <div class="container foot__grid">
       <div class="foot__brand">
-        <span class="brand-mark" aria-hidden="true">M<span>&amp;</span>A</span>
+        <span class="brand-mark" aria-hidden="true">N<span>V</span></span>
         <p class="foot__tagline display">{{ firm.tagline }}</p>
         <p class="foot__registry index">
-          {{ firm.legal.oab }} · CNPJ {{ firm.legal.cnpj }}
+          {{ firm.legal.oab }}<template v-if="firm.legal.cnpj"> · CNPJ {{ firm.legal.cnpj }}</template>
         </p>
-        <div class="foot__social">
-          <a :href="firm.social.linkedin" target="_blank" rel="noopener noreferrer">
+        <div v-if="firm.social.linkedin || firm.social.instagram" class="foot__social">
+          <a v-if="firm.social.linkedin" :href="firm.social.linkedin" target="_blank" rel="noopener noreferrer">
             LinkedIn
           </a>
-          <a :href="firm.social.instagram" target="_blank" rel="noopener noreferrer">
+          <a v-if="firm.social.instagram" :href="firm.social.instagram" target="_blank" rel="noopener noreferrer">
             Instagram
           </a>
         </div>
@@ -86,7 +86,7 @@ onUnmounted(() => ctx?.revert())
               {{ firm.contact.phone }}
             </a>
           </li>
-          <li>
+          <li v-if="firm.contact.email">
             <a :href="`mailto:${firm.contact.email}`">{{ firm.contact.email }}</a>
           </li>
         </ul>

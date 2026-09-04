@@ -107,7 +107,7 @@ onUnmounted(() => ctx?.revert())
               </dd>
             </div>
 
-            <div class="contact__item">
+            <div v-if="firm.contact.email" class="contact__item">
               <dt class="label label--mute">E-mail</dt>
               <dd>
                 <a class="contact__mail" :href="`mailto:${firm.contact.email}`">
@@ -132,7 +132,7 @@ onUnmounted(() => ctx?.revert())
 
           <figure class="contact__map">
             <iframe
-              title="Localização do escritório Mendes &amp; Associados"
+              :title="`Localização do escritório ${firm.name}`"
               :src="firm.contact.address.mapEmbedUrl"
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
